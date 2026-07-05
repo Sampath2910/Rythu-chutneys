@@ -1,0 +1,299 @@
+/* Premium CSS Design System for Rythu Chutneys */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Color Palette */
+  --chilli-red: #8B0000;
+  --chilli-red-hover: #660000;
+  --chilli-red-light: #FFECEC;
+  --spice-gold: #D4AF37;
+  --spice-gold-hover: #AA8C2C;
+  --spice-gold-light: #FFF9E6;
+  --leaf-green: #1E4620;
+  --leaf-green-light: #EBF7EC;
+  
+  --bg-cream: #FAF7F0;
+  --bg-white: #FFFFFF;
+  --bg-dark: #12100E;
+  
+  --text-dark: #2B2621;
+  --text-muted: #6E655C;
+  --text-light: #FAF7F0;
+  
+  --border-color: #E6DFD3;
+  --shadow-sm: 0 2px 4px rgba(43, 38, 33, 0.05);
+  --shadow-md: 0 8px 16px rgba(43, 38, 33, 0.08);
+  --shadow-lg: 0 16px 32px rgba(43, 38, 33, 0.12);
+  
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  
+  /* Fonts */
+  --font-serif: 'DM Serif Display', serif;
+  --font-sans: 'Outfit', sans-serif;
+  
+  /* Layout */
+  --max-width: 1200px;
+  --header-height: 80px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+  --bg-cream: #12100E;
+  --bg-white: #1C1916;
+  --text-dark: #FAF7F0;
+  --text-muted: #B3AAA0;
+  --border-color: #38322C;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-cream);
+  color: var(--text-dark);
+  line-height: 1.6;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+}
+
+/* Premium Layout utilities */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(139, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Glassmorphism Header */
+.header-glass {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background: rgba(250, 247, 240, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+  transition: all var(--transition-fast);
+}
+
+[data-theme="dark"] .header-glass {
+  background: rgba(28, 25, 22, 0.85);
+}
+
+/* Premium Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--chilli-red);
+  color: #FFFFFF;
+}
+
+.btn-primary:hover {
+  background-color: var(--chilli-red-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-dark);
+  border: 2px solid var(--chilli-red);
+}
+
+.btn-secondary:hover {
+  background-color: var(--chilli-red-light);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background-color: rgba(139, 0, 0, 0.1);
+}
+
+.btn-gold {
+  background-color: var(--spice-gold);
+  color: var(--bg-dark);
+}
+
+.btn-gold:hover {
+  background-color: var(--spice-gold-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Badge System */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-mild {
+  background-color: #EBF7EC;
+  color: #2E7D32;
+}
+
+.badge-medium {
+  background-color: #FFF9E6;
+  color: #B78103;
+}
+
+.badge-hot {
+  background-color: #FFF3E0;
+  color: #E65100;
+}
+
+.badge-andhra {
+  background-color: #FFEBEE;
+  color: #C62828;
+  animation: pulse-glow 2s infinite;
+}
+
+/* Card System */
+.product-card {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--spice-gold);
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text-dark);
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-white);
+  color: var(--text-dark);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
+}
+
+.form-control:focus {
+  border-color: var(--chilli-red);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

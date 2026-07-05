@@ -1,0 +1,25 @@
+# Task List - Rythu Chutneys E-commerce
+
+- [x] Root configuration and monorepo script
+- [x] Backend (Server) development
+  - [x] Initialize Node/Express with TypeScript
+  - [x] Prisma schema & SQLite database configuration
+  - [x] 5. Migrate Catalog Editor to Pickle Shop page (Edit/Delete controls + Add Pickle dialog)
+- [x] 6. Clean Admin Panel Dashboard (Remove Manage Catalog sub-tab)
+- [/] 7. Update Footer (Embed coordinates 16.234341,77.798630)(Remove password fields, add Send OTP / OTP field)
+- [x] Image Assets Generation
+  - [x] Product Images: Avakaya Mango Pickle, Gongura Pickle, Tomato Pickle, Ginger Pickle, Pandu Mirapa Chutney
+- [x] Frontend (Client) development
+  - [x] Initialize React Vite app with TypeScript
+  - [x] Core styling system (`index.css` with CSS variables)
+  - [x] Language Context (English / Telugu translation library)
+  - [x] Cart Context (with weight variation support: 250g, 500g, 1kg)
+  - [x] Auth Context (JWT and persistent user sessions)
+  - [x] Reusable UI components (Header, Footer, ProductCard, LocationChecker, OrderTracker)
+  - [x] Pages (Home, Shop, ProductDetail, Checkout, Tracking, AdminDashboard)
+- [x] Deployment & Infrastructure files
+  - [x] `vercel.json` (frontend rewrite rules)
+  - [x] `render.yaml` (backend Render spec)
+- [x] Verification and Testing
+  - [x] Compile client and server typescript checks
+  - [x] End-to-end checkout, language switching, delivery radius testing

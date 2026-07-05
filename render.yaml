@@ -1,0 +1,26 @@
+services:
+  # Express Backend Web Service
+  - type: web
+    name: rythu-chutneys-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build --prefix server
+    startCommand: npm run start --prefix server
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rythu-chutneys-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: VITE_API_URL
+        value: https://rythu-chutneys-backend.onrender.com
+
+databases:
+  # PostgreSQL Database Instance
+  - name: rythu-chutneys-db
+    plan: free
+    databaseName: rythuchutneys
+    user: rythu_admin
