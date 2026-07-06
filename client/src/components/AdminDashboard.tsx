@@ -231,6 +231,29 @@ export const AdminDashboard: React.FC = () => {
       alert('Error deleting order.');
     }
   };
+  const deleteCustomer = async (customerId: string) => {
+    if (!window.confirm('Are you sure you want to delete this customer? This action cannot be undone.')) {
+      return;
+    }
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/users/${customerId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (response.ok) {
+        alert('Customer deleted successfully.');
+        loadData();
+      } else {
+        const data = await response.json();
+        alert(data.message || 'Failed to delete customer.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error deleting customer.');
+    }
+  };
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
     setSettingsError(null);
@@ -664,6 +687,7 @@ export const AdminDashboard: React.FC = () => {
                 <th style={{ padding: '16px' }}>Phone Number</th>
                 <th style={{ padding: '16px' }}>Role</th>
                 <th style={{ padding: '16px' }}>Member Since</th>
+                <th style={{ padding: '16px' }}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -687,11 +711,28 @@ export const AdminDashboard: React.FC = () => {
                   <td style={{ padding: '16px' }}>
                     {new Date(c.createdAt).toLocaleDateString()}
                   </td>
+                  <td style={{ padding: '16px' }}>
+                    {c.role !== 'ADMIN' && (
+                      <button
+                        onClick={() => deleteCustomer(c.id)}
+                        style={{
+                          background: 'transparent',
+                          border: 'none',
+                          color: 'var(--chilli-red)',
+                          cursor: 'pointer',
+                          fontWeight: 600,
+                          fontSize: '0.85rem'
+                        }}
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </td>
                 </tr>
               ))}
               {customers.length === 0 && (
                 <tr>
-                  <td colSpan={5} style={{ textAlign: 'center', padding: '30px', color: 'var(--text-muted)' }}>
+                  <td colSpan={6} style={{ textAlign: 'center', padding: '30px', color: 'var(--text-muted)' }}>
                     No registered customers found.
                   </td>
                 </tr>

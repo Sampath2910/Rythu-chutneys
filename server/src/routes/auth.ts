@@ -406,4 +406,32 @@ router.post('/forgot-password', async (req, res) => {
   }
 });
 
+// Delete customer (Admin Only)
+router.delete('/users/:id', requireAdmin, async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    if (id === req.user?.id) {
+      return res.status(400).json({ message: 'You cannot delete your own admin account.' });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id }
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Customer not found.' });
+    }
+
+    await prisma.user.delete({
+      where: { id }
+    });
+
+    return res.json({ message: 'Customer deleted successfully' });
+  } catch (error: any) {
+    console.error('Delete customer error:', error);
+    return res.status(500).json({ message: 'Server error during customer deletion' });
+  }
+});
+
 export default router;

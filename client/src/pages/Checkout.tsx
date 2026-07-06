@@ -231,7 +231,7 @@ export const Checkout: React.FC<CheckoutProps> = ({ setCurrentTab, setTrackedOrd
                       {langCode === 'en' ? item.nameEn : item.nameTe}
                     </div>
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                      Weight: {item.weightLabel || item.weight} | Price: ₹{item.price}
+                      {(item.weightLabel?.toLowerCase().includes('roti') || item.weightLabel?.toLowerCase().includes('pc')) ? '' : 'Weight: '}{item.weightLabel || item.weight} | Price: ₹{item.price}
                     </div>
                   </div>
 

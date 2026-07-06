@@ -132,7 +132,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ product, setCurren
           {/* Weight Select Option */}
           <div>
             <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '8px', textTransform: 'uppercase' }}>
-              {t('selectWeight')}
+              {product.category === 'ROTI' ? (language === 'en' ? 'Select Option' : 'ఎంపికను ఎంచుకోండి') : t('selectWeight')}
             </label>
             <div style={{ display: 'flex', gap: '12px', maxWidth: '360px' }}>
               {(['250g', '500g', '1kg'] as const).map((weight) => (
