@@ -131,7 +131,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ setCurrentTab }) => {
               <input
                 type="email"
                 className="form-control"
-                placeholder="mekalalokesh2005@gmail.com"
+                placeholder="mekalalokesh2003@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -201,7 +201,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ setCurrentTab }) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold', marginBottom: '4px' }}>
             <ShieldCheck size={16} /> Testing Access Credentials
           </div>
-          Email: <code>mekalalokesh2005@gmail.com</code><br />
+          Email: <code>mekalalokesh2003@gmail.com</code><br />
           Password: <code>Admin@Rythu2026</code>
         </div>
       </div>
