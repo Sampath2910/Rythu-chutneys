@@ -31,7 +31,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ isOpen
     setSubmitting(true);
     try {
       const response = await fetch(`${API_BASE_URL}/api/auth/change-password`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`

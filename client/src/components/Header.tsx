@@ -178,24 +178,25 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, setCurrentTab, openA
           {/* User Profile */}
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '0.9rem', fontWeight: 600 }} className="desktop-only">
-                {user.name.split(' ')[0]}
-              </span>
-              <button 
+              <span 
                 onClick={openChangePasswordModal}
                 style={{ 
-                  background: 'var(--bg-cream)', 
-                  color: 'var(--text-dark)', 
-                  border: '1px solid var(--border-color)',
-                  padding: '6px 14px',
+                  fontSize: '0.9rem', 
+                  fontWeight: 600, 
+                  cursor: 'pointer',
+                  padding: '6px 12px',
                   borderRadius: '20px',
-                  fontWeight: 600,
-                  fontSize: '0.85rem',
-                  cursor: 'pointer' 
-                }}
+                  border: '1px solid var(--border-color)',
+                  background: 'var(--bg-cream)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }} 
+                className="desktop-only"
+                title="Change Password"
               >
-                🔑 Password
-              </button>
+                👤 {user.name.split(' ')[0]}
+              </span>
               <button 
                 onClick={logout}
                 style={{ 
