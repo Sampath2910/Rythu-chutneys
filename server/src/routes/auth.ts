@@ -344,13 +344,14 @@ router.post('/forgot-password', async (req, res) => {
 
     // Simulate sending email to console log
     console.log('\n=========================================================');
-    console.log(`[EMAIL SIMULATOR] Sent Mail to: ${user.email}`);
+    console.log(`[EMAIL SIMULATOR] Sent Mail From: mekalalokesh2005@gmail.com`);
+    console.log(`To: ${user.email}`);
     console.log('Subject: Rythu Chutneys - Password Recovery');
     console.log(`Message: Hello ${user.name},\nYour password has been reset. Your temporary password to log in is: ${tempPassword}`);
     console.log('=========================================================\n');
 
     return res.json({ 
-      message: `A temporary password has been sent to ${user.email} (Simulated). Your login password is: ${tempPassword}`
+      message: `A temporary password has been sent from mekalalokesh2005@gmail.com to ${user.email} (Simulated). Your login password is: ${tempPassword}`
     });
   } catch (error: any) {
     console.error('Forgot password error:', error);
