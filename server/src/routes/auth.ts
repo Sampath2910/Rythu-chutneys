@@ -351,7 +351,7 @@ router.post('/forgot-password', async (req, res) => {
     console.log('=========================================================\n');
 
     return res.json({ 
-      message: `A temporary password has been sent from mekalalokesh2005@gmail.com to ${user.email} (Simulated). Your login password is: ${tempPassword}`
+      message: `A temporary password has been sent from mekalalokesh2005@gmail.com to ${user.email} (Simulated).`
     });
   } catch (error: any) {
     console.error('Forgot password error:', error);
