@@ -27,6 +27,8 @@ interface Order {
   transactionId?: string | null;
   createdAt: string;
   items: OrderItem[];
+  deliveryDate?: string | null;
+  deliveryTimeSlot?: string | null;
 }
 
 
@@ -461,6 +463,11 @@ export const AdminDashboard: React.FC = () => {
                   <td style={{ padding: '16px', fontSize: '0.85rem', maxWidth: '200px' }}>
                     <strong>Addr:</strong> {o.address}<br />
                     <strong>Ph:</strong> {o.phone}<br />
+                    {o.deliveryDate && (
+                      <div style={{ marginTop: '4px', fontSize: '0.8rem', color: 'var(--chilli-red)' }}>
+                        <strong>📆 Schedule:</strong> {o.deliveryDate} ({o.deliveryTimeSlot || 'Anytime'})
+                      </div>
+                    )}
                     {o.paymentMethod === 'ONLINE' && (
                       <div style={{ marginTop: '6px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
                         <div style={{ backgroundColor: 'var(--spice-gold-light)', padding: '4px 6px', borderRadius: '4px', border: '1px solid var(--spice-gold)', fontSize: '0.75rem' }}>

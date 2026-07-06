@@ -24,6 +24,15 @@ export const Checkout: React.FC<CheckoutProps> = ({ setCurrentTab, setTrackedOrd
   const [inputTxnId, setInputTxnId] = useState('');
   const [showOriginalQr, setShowOriginalQr] = useState(false);
 
+  // Scheduled Delivery Slots
+  const getTomorrowDateString = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toISOString().split('T')[0];
+  };
+  const [deliveryDate, setDeliveryDate] = useState(getTomorrowDateString());
+  const [deliveryTimeSlot, setDeliveryTimeSlot] = useState('10:00 AM - 01:00 PM');
+
   // Interactive Flow States
   const [submitting, setSubmitting] = useState(false);
   const [showPaymentGateway, setShowPaymentGateway] = useState(false);
@@ -77,7 +86,9 @@ export const Checkout: React.FC<CheckoutProps> = ({ setCurrentTab, setTrackedOrd
           paymentMethod: isPaid ? 'ONLINE' : 'COD',
           latitude: deliveryDetails?.latitude || 16.2268,
           longitude: deliveryDetails?.longitude || 77.8080,
-          transactionId: transactionId || null
+          transactionId: transactionId || null,
+          deliveryDate,
+          deliveryTimeSlot
         })
       });
 
@@ -122,6 +133,8 @@ export const Checkout: React.FC<CheckoutProps> = ({ setCurrentTab, setTrackedOrd
       `*Customer Name:* ${name}\n` +
       `*Phone Number:* ${phone}\n` +
       `*Delivery Address:* ${address}\n` +
+      `*Scheduled Date:* ${deliveryDate}\n` +
+      `*Preferred Time Slot:* ${deliveryTimeSlot}\n` +
       `*Payment Method:* ${paymentStr}\n` +
       `*Delivery Charge:* ${deliveryDetails?.fee === 0 ? 'FREE' : `₹${deliveryDetails?.fee}`}\n` +
       `*Total Amount:* ₹${totalAmount}\n\n` +
@@ -343,6 +356,36 @@ export const Checkout: React.FC<CheckoutProps> = ({ setCurrentTab, setTrackedOrd
                   readOnly
                   required
                 />
+              </div>
+
+              {/* Delivery Schedule Date & Time */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Delivery Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={deliveryDate}
+                    min={new Date().toISOString().split('T')[0]}
+                    onChange={(e) => setDeliveryDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Time Slot</label>
+                  <select
+                    className="form-control"
+                    value={deliveryTimeSlot}
+                    onChange={(e) => setDeliveryTimeSlot(e.target.value)}
+                    required
+                    style={{ height: '42px', padding: '0 12px', borderRadius: '8px', border: '1px solid var(--border-color)', width: '100%', backgroundColor: '#fff', fontSize: '0.9rem' }}
+                  >
+                    <option value="10:00 AM - 01:00 PM">10:00 AM - 01:00 PM</option>
+                    <option value="01:00 PM - 04:00 PM">01:00 PM - 04:00 PM</option>
+                    <option value="04:00 PM - 07:00 PM">04:00 PM - 07:00 PM</option>
+                    <option value="07:00 PM - 10:00 PM">07:00 PM - 10:00 PM</option>
+                  </select>
+                </div>
               </div>
 
               {/* Payment Methods selector */}

@@ -26,6 +26,8 @@ export interface Order {
   deliveryFee: number;
   createdAt: string;
   items: OrderItem[];
+  deliveryDate?: string | null;
+  deliveryTimeSlot?: string | null;
 }
 
 interface OrderTrackerProps {
@@ -246,6 +248,12 @@ export const OrderTracker: React.FC<OrderTrackerProps> = ({ order }) => {
             <Phone size={16} style={{ color: 'var(--spice-gold-hover)' }} />
             <span><strong>Contact:</strong> {order.phone}</span>
           </div>
+          {order.deliveryDate && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-dark)' }}>
+              <Calendar size={16} style={{ color: 'var(--chilli-red)' }} />
+              <span><strong>Scheduled Delivery:</strong> {order.deliveryDate} ({order.deliveryTimeSlot || 'Anytime'})</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

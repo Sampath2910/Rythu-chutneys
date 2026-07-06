@@ -16,7 +16,9 @@ router.post('/', async (req, res) => {
       paymentMethod,
       latitude,
       longitude,
-      transactionId
+      transactionId,
+      deliveryDate,
+      deliveryTimeSlot
     } = req.body;
 
     if (!items || !Array.isArray(items) || items.length === 0 || !address || !phone) {
@@ -106,7 +108,9 @@ router.post('/', async (req, res) => {
           phone,
           deliveryDistance: distance,
           deliveryFee,
-          transactionId: transactionId || null
+          transactionId: transactionId || null,
+          deliveryDate: deliveryDate || null,
+          deliveryTimeSlot: deliveryTimeSlot || null
         }
       });
 
