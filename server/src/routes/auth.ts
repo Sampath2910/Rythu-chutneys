@@ -184,7 +184,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Email and password are required' });
     }
 
-    const user = await prisma.user.findFirst({
+    const users = await prisma.user.findMany({
       where: {
         OR: [
           { email: email },
@@ -192,14 +192,24 @@ router.post('/login', async (req, res) => {
         ]
       }
     });
-    if (!user) {
+    if (users.length === 0) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
-    const isMatch = await bcrypt.compare(password, user.passwordHash);
-    if (!isMatch) {
+    let matchedUser = null;
+    for (const u of users) {
+      const isMatch = await bcrypt.compare(password, u.passwordHash);
+      if (isMatch) {
+        matchedUser = u;
+        break;
+      }
+    }
+
+    if (!matchedUser) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
+
+    const user = matchedUser;
 
     const secret = process.env.JWT_SECRET || 'super-secret-rythu-key-2026-traditional-pickles';
     const token = jwt.sign(
@@ -319,7 +329,7 @@ router.post('/forgot-password', async (req, res) => {
       return res.status(400).json({ message: 'Email address or phone number is required' });
     }
 
-    const user = await prisma.user.findFirst({
+    const users = await prisma.user.findMany({
       where: {
         OR: [
           { email: email },
@@ -328,7 +338,7 @@ router.post('/forgot-password', async (req, res) => {
       }
     });
 
-    if (!user) {
+    if (users.length === 0) {
       return res.status(404).json({ message: 'User not found with this email/phone' });
     }
 
@@ -337,21 +347,23 @@ router.post('/forgot-password', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(tempPassword, salt);
 
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { passwordHash }
-    });
+    for (const u of users) {
+      await prisma.user.update({
+        where: { id: u.id },
+        data: { passwordHash }
+      });
+    }
 
     // Simulate sending email to console log
     console.log('\n=========================================================');
     console.log(`[EMAIL SIMULATOR] Sent Mail From: mekalalokesh2005@gmail.com`);
-    console.log(`To: ${user.email}`);
+    console.log(`To: ${users.map(u => u.email).join(', ')}`);
     console.log('Subject: Rythu Chutneys - Password Recovery');
-    console.log(`Message: Hello ${user.name},\nYour password has been reset. Your temporary password to log in is: ${tempPassword}`);
+    console.log(`Message: Hello,\nYour password has been reset. Your temporary password to log in is: ${tempPassword}`);
     console.log('=========================================================\n');
 
     return res.json({ 
-      message: `A temporary password has been sent from mekalalokesh2005@gmail.com to ${user.email} (Simulated).`
+      message: `A temporary password has been sent from mekalalokesh2005@gmail.com to ${users.map(u => u.email).join(' and ')} (Simulated).`
     });
   } catch (error: any) {
     console.error('Forgot password error:', error);
