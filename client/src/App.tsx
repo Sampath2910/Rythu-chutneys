@@ -11,6 +11,7 @@ import { Checkout } from './pages/Checkout';
 import { Tracking } from './pages/Tracking';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AuthModal } from './components/AuthModal';
+import { ChangePasswordModal } from './components/ChangePasswordModal';
 import type { Product } from './components/ProductCard';
 import { useAuth } from './context/AuthContext';
 import { AdminLogin } from './pages/AdminLogin';
@@ -21,6 +22,7 @@ const MainAppContent: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [trackedOrderId, setTrackedOrderId] = useState<string>('');
   const [authModalOpen, setAuthModalOpen] = useState<boolean>(false);
+  const [changePasswordOpen, setChangePasswordOpen] = useState<boolean>(false);
 
   const renderContent = () => {
     switch (currentTab) {
@@ -52,6 +54,7 @@ const MainAppContent: React.FC = () => {
         currentTab={currentTab} 
         setCurrentTab={setCurrentTab} 
         openAuthModal={() => setAuthModalOpen(true)} 
+        openChangePasswordModal={() => setChangePasswordOpen(true)} 
       />
 
       {/* Main Content Area */}
@@ -66,6 +69,12 @@ const MainAppContent: React.FC = () => {
       <AuthModal 
         isOpen={authModalOpen} 
         onClose={() => setAuthModalOpen(false)} 
+      />
+
+      {/* Change Password Modal */}
+      <ChangePasswordModal 
+        isOpen={changePasswordOpen} 
+        onClose={() => setChangePasswordOpen(false)} 
       />
     </div>
   );

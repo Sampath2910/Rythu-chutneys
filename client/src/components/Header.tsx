@@ -3,15 +3,15 @@ import { useLanguage } from '../context/LanguageContext';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { ShoppingCart, User, Globe, Moon, Sun, Menu, X, ShieldAlert } from 'lucide-react';
-import { ChangePasswordModal } from './ChangePasswordModal';
 
 interface HeaderProps {
   currentTab: string;
   setCurrentTab: (tab: string) => void;
   openAuthModal: () => void;
+  openChangePasswordModal: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ currentTab, setCurrentTab, openAuthModal }) => {
+export const Header: React.FC<HeaderProps> = ({ currentTab, setCurrentTab, openAuthModal, openChangePasswordModal }) => {
   const { language, setLanguage, t } = useLanguage();
   const { cartCount } = useCart();
   const { user, logout } = useAuth();
@@ -26,7 +26,6 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, setCurrentTab, openA
   });
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [changePasswordOpen, setChangePasswordOpen] = useState(false);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -183,7 +182,7 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, setCurrentTab, openA
                 {user.name.split(' ')[0]}
               </span>
               <button 
-                onClick={() => setChangePasswordOpen(true)}
+                onClick={openChangePasswordModal}
                 style={{ 
                   background: 'var(--bg-cream)', 
                   color: 'var(--text-dark)', 
@@ -297,12 +296,6 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, setCurrentTab, openA
           }
         }
       `}</style>
-
-      {/* Customer Change Password Modal */}
-      <ChangePasswordModal 
-        isOpen={changePasswordOpen} 
-        onClose={() => setChangePasswordOpen(false)} 
-      />
     </header>
   );
 };
