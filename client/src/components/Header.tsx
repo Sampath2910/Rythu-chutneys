@@ -3,6 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { ShoppingCart, User, Globe, Moon, Sun, Menu, X, ShieldAlert } from 'lucide-react';
+import { ChangePasswordModal } from './ChangePasswordModal';
 
 interface HeaderProps {
   currentTab: string;
@@ -25,6 +26,7 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, setCurrentTab, openA
   });
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [changePasswordOpen, setChangePasswordOpen] = useState(false);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -181,6 +183,21 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, setCurrentTab, openA
                 {user.name.split(' ')[0]}
               </span>
               <button 
+                onClick={() => setChangePasswordOpen(true)}
+                style={{ 
+                  background: 'var(--bg-cream)', 
+                  color: 'var(--text-dark)', 
+                  border: '1px solid var(--border-color)',
+                  padding: '6px 14px',
+                  borderRadius: '20px',
+                  fontWeight: 600,
+                  fontSize: '0.85rem',
+                  cursor: 'pointer' 
+                }}
+              >
+                🔑 Password
+              </button>
+              <button 
                 onClick={logout}
                 style={{ 
                   background: 'var(--chilli-red-light)', 
@@ -280,6 +297,12 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, setCurrentTab, openA
           }
         }
       `}</style>
+
+      {/* Customer Change Password Modal */}
+      <ChangePasswordModal 
+        isOpen={changePasswordOpen} 
+        onClose={() => setChangePasswordOpen(false)} 
+      />
     </header>
   );
 };
