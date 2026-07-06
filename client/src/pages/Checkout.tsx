@@ -96,6 +96,7 @@ export const Checkout: React.FC<CheckoutProps> = ({ setCurrentTab, setTrackedOrd
         setTrackedOrderId(orderResult.id);
         clearCart();
         setCurrentTab('track');
+        sendDetailsToWhatsApp(orderResult.id, false);
       }
 
     } catch (error: any) {
@@ -104,6 +105,31 @@ export const Checkout: React.FC<CheckoutProps> = ({ setCurrentTab, setTrackedOrd
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const sendDetailsToWhatsApp = (orderId: string, isPaidOnline: boolean, refId?: string) => {
+    const paymentStr = isPaidOnline 
+      ? `Online Payment (Verified UTR: ${refId || 'N/A'})` 
+      : 'Cash on Delivery';
+      
+    const itemsText = cart.map(item => {
+      const name = langCode === 'en' ? item.nameEn : item.nameTe;
+      return `- ${name} (${item.weight}) x ${item.quantity} = ₹${item.price * item.quantity}`;
+    }).join('\n');
+
+    const message = `*Rythu Chutneys - Order Confirmation* 🌾\n\n` +
+      `*Order ID:* ${orderId}\n` +
+      `*Customer Name:* ${name}\n` +
+      `*Phone Number:* ${phone}\n` +
+      `*Delivery Address:* ${address}\n` +
+      `*Payment Method:* ${paymentStr}\n` +
+      `*Delivery Charge:* ${deliveryDetails?.fee === 0 ? 'FREE' : `₹${deliveryDetails?.fee}`}\n` +
+      `*Total Amount:* ₹${totalAmount}\n\n` +
+      `*Items Ordered:* \n${itemsText}\n\n` +
+      `Thank you for ordering with Rythu Chutneys!`;
+
+    const waUrl = `https://wa.me/916309574197?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, '_blank');
   };
 
   const handleConfirmQrPayment = async () => {
@@ -124,6 +150,7 @@ export const Checkout: React.FC<CheckoutProps> = ({ setCurrentTab, setTrackedOrd
       clearCart();
       setShowPaymentGateway(false);
       setCurrentTab('track');
+      sendDetailsToWhatsApp(createdOrderId, true, inputTxnId);
     }
   };
 

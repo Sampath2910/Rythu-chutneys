@@ -194,7 +194,7 @@ export const Home: React.FC<HomeProps> = ({ setCurrentTab }) => {
             style={{ width: '100%', height: 'auto', display: 'block' }}
           />
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(transparent, rgba(0,0,0,0.85))', padding: '20px', color: 'white' }}>
-            <h3 style={{ margin: 0, fontSize: '1.4rem', fontFamily: 'var(--font-serif)' }}>Mohan reddy.R</h3>
+            <h3 style={{ margin: 0, fontSize: '1.4rem', fontFamily: 'var(--font-serif)' }}>Mohan Reddy.R</h3>
             <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--spice-gold)' }}>{t('homeFounderRole')}</p>
           </div>
         </div>
