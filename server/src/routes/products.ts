@@ -72,7 +72,10 @@ router.post('/', requireAdmin, async (req, res) => {
       imageUrl,
       spiceLevel,
       category,
-      inStock
+      inStock,
+      weight1,
+      weight2,
+      weight3
     } = req.body;
 
     if (!nameEn || !nameTe || !price250g || !price500g || !price1kg) {
@@ -94,7 +97,10 @@ router.post('/', requireAdmin, async (req, res) => {
         imageUrl: imageUrl || '/images/default.jpg',
         spiceLevel: spiceLevel || 'MEDIUM',
         category: category || 'PICKLE',
-        inStock: inStock !== undefined ? !!inStock : true
+        inStock: inStock !== undefined ? !!inStock : true,
+        weight1: weight1 || undefined,
+        weight2: weight2 || undefined,
+        weight3: weight3 || undefined
       }
     });
 

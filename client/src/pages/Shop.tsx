@@ -38,6 +38,9 @@ export const Shop: React.FC<ShopProps> = ({ setSelectedProduct, setCurrentTab })
   const [spiceLevel, setSpiceLevel] = useState('MEDIUM');
   const [category, setCategory] = useState('PICKLE');
   const [imageUrl, setImageUrl] = useState('');
+  const [weight1, setWeight1] = useState('250g');
+  const [weight2, setWeight2] = useState('500g');
+  const [weight3, setWeight3] = useState('1kg');
 
   // Edit Product Form States
   const [editNameEn, setEditNameEn] = useState('');
@@ -50,6 +53,9 @@ export const Shop: React.FC<ShopProps> = ({ setSelectedProduct, setCurrentTab })
   const [editSpiceLevel, setEditSpiceLevel] = useState('MEDIUM');
   const [editCategory, setEditCategory] = useState('PICKLE');
   const [editImageUrl, setEditImageUrl] = useState('');
+  const [editWeight1, setEditWeight1] = useState('250g');
+  const [editWeight2, setEditWeight2] = useState('500g');
+  const [editWeight3, setEditWeight3] = useState('1kg');
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -152,7 +158,10 @@ export const Shop: React.FC<ShopProps> = ({ setSelectedProduct, setCurrentTab })
           spiceLevel,
           category,
           imageUrl: imageUrl || '/images/roti.jpg',
-          inStock: true
+          inStock: true,
+          weight1,
+          weight2,
+          weight3
         })
       });
       if (response.ok) {
@@ -200,7 +209,10 @@ export const Shop: React.FC<ShopProps> = ({ setSelectedProduct, setCurrentTab })
           price1kg: parseFloat(editPrice1000),
           spiceLevel: editSpiceLevel,
           category: editCategory,
-          imageUrl: editImageUrl
+          imageUrl: editImageUrl,
+          weight1: editWeight1,
+          weight2: editWeight2,
+          weight3: editWeight3
         })
       });
       if (response.ok) {
@@ -231,6 +243,9 @@ export const Shop: React.FC<ShopProps> = ({ setSelectedProduct, setCurrentTab })
     setEditSpiceLevel(product.spiceLevel);
     setEditCategory(product.category);
     setEditImageUrl(product.imageUrl);
+    setEditWeight1(product.weight1 || (product.category === 'ROTI' ? '1 Roti' : '250g'));
+    setEditWeight2(product.weight2 || (product.category === 'ROTI' ? '5 Rotis' : '500g'));
+    setEditWeight3(product.weight3 || (product.category === 'ROTI' ? '10 Rotis' : '1kg'));
   };
 
   return (
@@ -455,7 +470,7 @@ export const Shop: React.FC<ShopProps> = ({ setSelectedProduct, setCurrentTab })
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Price (250g / 1pc)</label>
                   <input type="number" className="form-control" value={price250} onChange={(e) => setPrice250(e.target.value)} required />
@@ -467,6 +482,22 @@ export const Shop: React.FC<ShopProps> = ({ setSelectedProduct, setCurrentTab })
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Price (1kg / 10pc)</label>
                   <input type="number" className="form-control" value={price1000} onChange={(e) => setPrice1000(e.target.value)} required />
+                </div>
+              </div>
+
+              {/* Weight Labels configuration */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Weight 1 Label</label>
+                  <input type="text" className="form-control" value={weight1} onChange={(e) => setWeight1(e.target.value)} required />
+                </div>
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Weight 2 Label</label>
+                  <input type="text" className="form-control" value={weight2} onChange={(e) => setWeight2(e.target.value)} required />
+                </div>
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Weight 3 Label</label>
+                  <input type="text" className="form-control" value={weight3} onChange={(e) => setWeight3(e.target.value)} required />
                 </div>
               </div>
 
@@ -581,6 +612,22 @@ export const Shop: React.FC<ShopProps> = ({ setSelectedProduct, setCurrentTab })
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Price (1kg / 10pc)</label>
                   <input type="number" className="form-control" value={editPrice1000} onChange={(e) => setEditPrice1000(e.target.value)} required />
+                </div>
+              </div>
+
+              {/* Weight Labels configuration */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Weight 1 Label</label>
+                  <input type="text" className="form-control" value={editWeight1} onChange={(e) => setEditWeight1(e.target.value)} required />
+                </div>
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Weight 2 Label</label>
+                  <input type="text" className="form-control" value={editWeight2} onChange={(e) => setEditWeight2(e.target.value)} required />
+                </div>
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Weight 3 Label</label>
+                  <input type="text" className="form-control" value={editWeight3} onChange={(e) => setEditWeight3(e.target.value)} required />
                 </div>
               </div>
 

@@ -11,6 +11,9 @@ interface OrderItem {
   product?: {
     nameEn: string;
     nameTe: string;
+    weight1?: string;
+    weight2?: string;
+    weight3?: string;
   } | null;
 }
 
@@ -503,12 +506,20 @@ export const AdminDashboard: React.FC = () => {
                     )}
                   </td>
                   <td style={{ padding: '16px', fontSize: '0.85rem' }}>
-                    {o.items.map((item, idx) => (
-                      <div key={idx}>
-                        • {item.product ? (language === 'en' ? item.product.nameEn : item.product.nameTe) : 'Chutney'} 
-                        ({item.weight}) x{item.quantity}
-                      </div>
-                    ))}
+                    {o.items.map((item, idx) => {
+                      const getWeightLabel = (item: any) => {
+                        if (!item.product) return item.weight;
+                        if (item.weight === '250g') return item.product.weight1 || item.weight;
+                        if (item.weight === '500g') return item.product.weight2 || item.weight;
+                        return item.product.weight3 || item.weight;
+                      };
+                      return (
+                        <div key={idx}>
+                          • {item.product ? (language === 'en' ? item.product.nameEn : item.product.nameTe) : 'Chutney'} 
+                          ({getWeightLabel(item)}) x{item.quantity}
+                        </div>
+                      );
+                    })}
                   </td>
                   <td style={{ padding: '16px', fontWeight: 700, color: 'var(--chilli-red)', fontSize: '0.95rem' }}>
                     ₹{o.totalAmount}

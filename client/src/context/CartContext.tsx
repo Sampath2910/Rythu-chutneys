@@ -5,6 +5,7 @@ export interface CartItem {
   nameEn: string;
   nameTe: string;
   weight: '250g' | '500g' | '1kg';
+  weightLabel?: string;
   quantity: number;
   price: number;
   imageUrl: string;

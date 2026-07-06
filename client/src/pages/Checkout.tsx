@@ -125,7 +125,7 @@ export const Checkout: React.FC<CheckoutProps> = ({ setCurrentTab, setTrackedOrd
       
     const itemsText = cart.map(item => {
       const name = langCode === 'en' ? item.nameEn : item.nameTe;
-      return `- ${name} (${item.weight}) x ${item.quantity} = ₹${item.price * item.quantity}`;
+      return `- ${name} (${item.weightLabel || item.weight}) x ${item.quantity} = ₹${item.price * item.quantity}`;
     }).join('\n');
 
     const message = `*Rythu Chutneys - Order Confirmation* 🌾\n\n` +
@@ -231,7 +231,7 @@ export const Checkout: React.FC<CheckoutProps> = ({ setCurrentTab, setTrackedOrd
                       {langCode === 'en' ? item.nameEn : item.nameTe}
                     </div>
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                      Weight: {item.weight} | Price: ₹{item.price}
+                      Weight: {item.weightLabel || item.weight} | Price: ₹{item.price}
                     </div>
                   </div>
 

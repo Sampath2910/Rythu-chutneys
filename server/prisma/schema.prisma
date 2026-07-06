@@ -31,6 +31,9 @@ model Product {
   spiceLevel    String   @default("MEDIUM") // MILD, MEDIUM, HOT, ANDHRA_HOT
   category      String   @default("PICKLE") // PICKLE, DRY_CHUTNEY, FRESH_CHUTNEY
   inStock       Boolean  @default(true)
+  weight1       String   @default("250g")
+  weight2       String   @default("500g")
+  weight3       String   @default("1kg")
   createdAt     DateTime @default(now())
   orderItems    OrderItem[]
 }

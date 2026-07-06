@@ -357,13 +357,42 @@ router.post('/forgot-password', async (req, res) => {
       });
     }
 
-    // Simulate sending email to console log
-    console.log('\n=========================================================');
-    console.log(`[EMAIL SIMULATOR] Sent Mail From: mekalalokesh2005@gmail.com`);
-    console.log(`To: ${users.map(u => u.email).join(', ')}`);
-    console.log('Subject: Rythu Chutneys - Password Recovery');
-    console.log(`Message: Hello,\nYour password has been reset. Your temporary password to log in is: ${tempPassword}`);
-    console.log('=========================================================\n');
+    // Send email using nodemailer if process.env.SMTP_PASS is configured, else log to console
+    const smtpUser = process.env.SMTP_USER || 'mekalalokesh2005@gmail.com';
+    const smtpPass = process.env.SMTP_PASS;
+
+    if (smtpPass) {
+      try {
+        const nodemailer = require('nodemailer');
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: smtpUser,
+            pass: smtpPass
+          }
+        });
+
+        const mailOptions = {
+          from: smtpUser,
+          to: users.map(u => u.email).join(', '),
+          subject: 'Rythu Chutneys - Password Recovery',
+          text: `Hello,\n\nYour password has been reset. Your temporary password to log in is: ${tempPassword}\n\nRegards,\nRythu Chutneys Support`
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log(`[EMAIL] Password recovery email sent successfully from ${smtpUser} to: ${users.map(u => u.email).join(', ')}`);
+      } catch (err: any) {
+        console.error('[EMAIL ERROR] Failed to send email via SMTP:', err.message);
+      }
+    } else {
+      console.log('\n=========================================================');
+      console.log(`[EMAIL SIMULATOR - NO SMTP_PASS CONFIGURED]`);
+      console.log(`Sent Mail From: ${smtpUser}`);
+      console.log(`To: ${users.map(u => u.email).join(', ')}`);
+      console.log('Subject: Rythu Chutneys - Password Recovery');
+      console.log(`Message: Hello,\nYour password has been reset. Your temporary password to log in is: ${tempPassword}`);
+      console.log('=========================================================\n');
+    }
 
     return res.json({ 
       message: `A temporary password has been sent from mekalalokesh2005@gmail.com to ${users.map(u => u.email).join(' and ')} (Simulated).`

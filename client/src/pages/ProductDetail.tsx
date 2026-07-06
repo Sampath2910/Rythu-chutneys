@@ -33,11 +33,18 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ product, setCurren
   };
 
   const handleAddToCart = () => {
+    const weightLabel = selectedWeight === '250g' 
+      ? (product.weight1 || (product.category === 'ROTI' ? '1 Roti' : '250g'))
+      : selectedWeight === '500g'
+        ? (product.weight2 || (product.category === 'ROTI' ? '5 Rotis' : '500g'))
+        : (product.weight3 || (product.category === 'ROTI' ? '10 Rotis' : '1kg'));
+
     addToCart({
       productId: product.id,
       nameEn: product.nameEn,
       nameTe: product.nameTe,
       weight: selectedWeight,
+      weightLabel,
       price: getPrice(),
       imageUrl: product.imageUrl
     }, quantity);
@@ -145,9 +152,11 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ product, setCurren
                     transition: 'all 0.15s'
                   }}
                 >
-                  {product.category === 'ROTI' 
-                    ? (weight === '250g' ? '1 Roti' : weight === '500g' ? '5 Rotis' : '10 Rotis') 
-                    : weight}
+                  {weight === '250g' 
+                    ? (product.weight1 || (product.category === 'ROTI' ? '1 Roti' : '250g'))
+                    : weight === '500g'
+                      ? (product.weight2 || (product.category === 'ROTI' ? '5 Rotis' : '500g'))
+                      : (product.weight3 || (product.category === 'ROTI' ? '10 Rotis' : '1kg'))}
                 </button>
               ))}
             </div>
